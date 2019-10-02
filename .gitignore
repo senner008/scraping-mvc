@@ -294,7 +294,4 @@ About
 
 .DS_Store
 
-# Webpack generated
-wwwroot/js
-wwwroot/css
-secrets.json
+
