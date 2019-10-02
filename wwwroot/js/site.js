@@ -23,7 +23,6 @@ function descriptionSearch() {
     });
 }
 
-
 var globalQuery = {
     priceMax : 0,
     description : ""
