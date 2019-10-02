@@ -36,7 +36,7 @@ function filterQuery() {
 }
 
 async function getList () {
-    return fetch("https://localhost:5001/FoodItems")
+    return fetch("https://senner-puppeteer-app.herokuapp.com/foods")
     .then(res => res.json())
 }
 
