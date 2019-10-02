@@ -23,6 +23,7 @@ function descriptionSearch() {
     });
 }
 
+
 var globalQuery = {
     priceMax : 0,
     description : ""
@@ -35,7 +36,7 @@ function filterQuery() {
 }
 
 async function getList () {
-    return fetch("https://senner-puppeteer-app.herokuapp.com/foods")
+    return fetch("/FoodItems")
     .then(res => res.json())
 }
 
