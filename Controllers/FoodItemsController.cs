@@ -13,20 +13,18 @@ namespace scraping_mvc.Controllers
     [ApiController]
     public class FoodItemsController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
 
          private readonly FoodItemsContext _fooditemsContext;
-        public FoodItemsController(ILogger<HomeController> logger, FoodItemsContext foodItemsContext)
+        public FoodItemsController( FoodItemsContext foodItemsContext)
         {
-            _logger = logger;
             _fooditemsContext = foodItemsContext;
         }
         [HttpGet]
-        [Route("FoodItems")]
-        public async Task<IActionResult> GetAll()
+        [Route("Fooditems")]
+        public IActionResult GetAll()
         {
             System.Console.WriteLine("hello");
-            var firstCategory = await _fooditemsContext.FoodItems.ToListAsync();  
+            var firstCategory = _fooditemsContext.FoodItems.ToList();  
             return Ok(firstCategory);
         }
 
