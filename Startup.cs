@@ -25,9 +25,9 @@ namespace scraping_mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-              Boolean isProduction = Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Production";
+            //   Boolean isProduction = Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Production";
             services.AddDbContext<FoodItemsContext> (options =>
-                    options.UseSqlServer (isProduction ? Environment.GetEnvironmentVariable("MyDbConnection") : Configuration["ConnectionString:BloggingApp:dbstring"]));
+                    options.UseSqlite ("Data Source=FoodItems.db"));
             services.AddControllersWithViews();
         }
 
