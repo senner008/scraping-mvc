@@ -22,7 +22,7 @@ namespace scraping_mvc {
 
         protected override async void OnModelCreating (ModelBuilder modelBuilder) {
             
-            if (Env.IsDevelopment ()) {
+            if (Env.IsDevelopment () || Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") {
                 await Seed<FoodItem> ("https://senner-puppeteer-app.herokuapp.com/foods", "");
                 await Seed<LunchItem> ("https://senner-puppeteer-app.herokuapp.com/lunch", "");
 
