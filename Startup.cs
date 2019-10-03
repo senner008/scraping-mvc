@@ -44,7 +44,7 @@ namespace scraping_mvc
                     options.UseSqlServer (isProduction ? Environment.GetEnvironmentVariable("MyDbConnection") : Configuration["ConnectionString:BloggingApp:dbstring"]));
             }
 
-            if (HostingEnvironment.EnvironmentName == "Development") 
+            if (HostingEnvironment.EnvironmentName == "Development" || Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") 
             {
                   services.AddDbContext<FoodItemsContext>(options => options.UseInMemoryDatabase(databaseName: "BoardGames"));
             }
