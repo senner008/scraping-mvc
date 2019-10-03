@@ -25,18 +25,19 @@ function descriptionSearch() {
 
 
 var globalQuery = {
+    isLunch : false,
     priceMax : 0,
     description : ""
 }
 
 function filterQuery() {
-    return globallist
+    return (globalQuery.isLunch ? lunchlist : foodlist)
         .filter(p => extractnumber(p.price) <= globalQuery.priceMax)
         .filter(d => d.description.includes(globalQuery.description))
 }
 
-async function getList () {
-    return fetch("/FoodItems")
+async function getList (url) {
+    return fetch(url)
     .then(res => res.json())
 }
 
@@ -49,9 +50,10 @@ function renderlist (list) {
 }
 
 $(document).ready(async function() {
-    globallist = await getList();
+    foodlist = await getList("/FoodItems");
+    lunchlist = await getList("/LunchItems");
 
-    renderlist(globallist);
+    renderlist(foodlist);
     priceSearch();
     descriptionSearch();
 
