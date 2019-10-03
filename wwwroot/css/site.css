@@ -107,3 +107,13 @@ body {
   text-transform: uppercase;
   padding-right: 10px;
  }
+
+ #titleText {
+   display : flex;
+   justify-content: space-between;
+   padding-bottom: 20px;
+ }
+
+ #spinnerButton {
+   height: 50%;
+ }

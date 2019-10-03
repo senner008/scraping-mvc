@@ -85,6 +85,8 @@ function renderlist (list) {
 $(document).ready(async function() {
     foodlist = await getList("/FoodItems");
     lunchlist = await getList("/LunchItems");
+    document.querySelector("#spinnerButton").remove();
+
 
     renderlist(foodlist);
     priceSearch();
