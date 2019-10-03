@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace scraping_mvc.Models {
-    public class FoodItem {
+
+    public abstract class FoodAbstract
+    {
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
@@ -10,14 +12,12 @@ namespace scraping_mvc.Models {
         public string Price { get; set; }
         public string Category { get; set; }
     }
+    public class FoodItem : FoodAbstract {
+      
+    }
 
-    public class LunchItem {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Price { get; set; }
-        public string Category { get; set; }
+    public class LunchItem : FoodAbstract {
+       
     }
 
 }

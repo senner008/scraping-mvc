@@ -18,13 +18,13 @@ namespace scraping_mvc.Controllers
         public FoodItemsController( FoodItemsContext foodItemsContext)
         {
             _fooditemsContext = foodItemsContext;
+            _fooditemsContext.Database.EnsureCreated();
         }
 
         [HttpGet]
         [Route("Fooditems")]
         public async Task<IActionResult> GetAllFoods()
         {
-            System.Console.WriteLine("hello");
             var firstCategory = await _fooditemsContext.FoodItems.ToListAsync();  
             return Ok(firstCategory);
         }
@@ -33,7 +33,6 @@ namespace scraping_mvc.Controllers
         [Route("LunchItems")]
         public async Task<IActionResult> GetAllLunch()
         {
-            System.Console.WriteLine("hello");
             var firstCategory = await _fooditemsContext.LunchItems.ToListAsync();  
             return Ok(firstCategory);
         }

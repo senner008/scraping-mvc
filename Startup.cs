@@ -16,12 +16,15 @@ namespace scraping_mvc
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            HostingEnvironment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,12 +35,19 @@ namespace scraping_mvc
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            System.Console.WriteLine(HostingEnvironment.EnvironmentName);
 
-                     Boolean isProduction = Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Production";
-            services.AddDbContext<FoodItemsContext> (options =>
-          
+            if (HostingEnvironment.EnvironmentName == "Production") 
+            {
+                Boolean isProduction = Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Production";
+                services.AddDbContext<FoodItemsContext> (options => 
                     options.UseSqlServer (isProduction ? Environment.GetEnvironmentVariable("MyDbConnection") : Configuration["ConnectionString:BloggingApp:dbstring"]));
-                    
+            }
+
+            if (HostingEnvironment.EnvironmentName == "Development") 
+            {
+                  services.AddDbContext<FoodItemsContext>(options => options.UseInMemoryDatabase(databaseName: "BoardGames"));
+            }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
