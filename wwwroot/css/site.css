@@ -95,3 +95,15 @@ body {
  font-weight : bold;
  padding-right: 10px;
 }
+
+.li-price {
+  padding-left: 10px;
+  text-decoration: underline;
+ }
+
+ 
+.li-category {
+  font-weight : bold;
+  text-transform: uppercase;
+  padding-right: 10px;
+ }
