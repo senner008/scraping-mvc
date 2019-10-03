@@ -21,10 +21,10 @@ namespace scraping_mvc.Controllers
         }
         [HttpGet]
         [Route("Fooditems")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             System.Console.WriteLine("hello");
-            var firstCategory = _fooditemsContext.FoodItems.ToList();  
+            var firstCategory = await _fooditemsContext.FoodItems.ToListAsync();  
             return Ok(firstCategory);
         }
 
