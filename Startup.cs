@@ -35,8 +35,9 @@ namespace scraping_mvc
 
                      Boolean isProduction = Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Production";
             services.AddDbContext<FoodItemsContext> (options =>
+          
                     options.UseSqlServer (isProduction ? Environment.GetEnvironmentVariable("MyDbConnection") : Configuration["ConnectionString:BloggingApp:dbstring"]));
-
+                    
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
