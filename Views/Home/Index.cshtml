@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center">
+   
         <div id="titleText">
             <h1>Søg i menu</h1>
             <button id="spinnerButton" class="btn btn-primary">
@@ -13,37 +13,36 @@
          <div class="form-group">
 
              <div class="form-group row">
-                <label for="priceSearch"  class="col-sm-2 col-form-label">Max pris</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="priceSearch" type="text" name="name" value="" />
+                  <div class="input-container col-md-4 mb-3">
+                    <input class="form-control" id="categorySearch" placeholder="Fra kategori..." type="text" name="name" value="" />
                 </div>
-             </div>
-            <div class="form-group row">
-                <label for="descriptionSearch" class="col-sm-2 col-form-label">Indeholder</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="descriptionSearch" type="text" name="name" value="" />
+                 <div class="input-container col-md-4 mb-3">
+                    <input class="form-control" id="titleSearch" placeholder="Titel eller nummer..." type="text" name="name" value="" />
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="categorySearch" class="col-sm-2 col-form-label">Kategori</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" id="categorySearch" type="text" name="name" value="" />
+               <div class="input-container col-md-4 mb-3">
+                    <input class="form-control" id="priceSearch" placeholder="Indtast max pris..." type="number" name="name" value="" />
                 </div>
-            </div>
-              <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="inlineFormCustomSelectPref">Menu</label>
-                    <div class="col-sm-10">
+                  <div class="input-container col-md-4 mb-3">
+                    <input class="form-control" id="descriptionSearch" placeholder="Indeholder..." type="text" name="name" value="" />
+                </div>
+                 <div class="input-container col-md-4 mb-3">
                     <select id="lunchSelect" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                        <option selected>Vælg menu...</option>
                         <option value="1">Standard</option>
                         <option value="2">Frokost tilbud</option>
                     </select>
-                    </div>
-              </div>
-         </div>
-        
-
-
-
+                </div>
+                <div class="input-container col-md-4 mb-3 btn-group btn-group-toggle" data-toggle="buttons">   
+                    <button class="sort-direction input-group-text" style="background: white"><i class="sort-direction-down fas fa-sort-amount-down-alt"></i></button>
+                    <label class="sorting-class btn btn-secondary active">
+                        <input type="radio" name="category" id="option1" autocomplete="off" checked>Kategori
+                    </label>
+                    <label class="sorting-class btn btn-secondary">
+                        <input type="radio" name="title" id="option2" autocomplete="off">Titel
+                    </label>
+                    <label class="sorting-class btn btn-secondary">
+                        <input type="radio" name="price" id="option3" autocomplete="off">Pris
+                    </label>
+                </div>
+            </div>
         <ul class="list-group" id="listUl"></ul>
     </div>
