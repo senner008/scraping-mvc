@@ -144,7 +144,7 @@ async function filterQueryJS() {
 
 async function filterQueryDB() {
     console.log("filter db")
-    var result = await postData("query/" + (queryObject.isLunch ? "LuchItems" : "FoodItems") , queryObject);
+    var result = await postData("query/" + (queryObject.isLunch ? "LunchItems" : "FoodItems") , queryObject);
     return result;
 }
 

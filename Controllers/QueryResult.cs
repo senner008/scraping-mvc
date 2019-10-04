@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using scraping_mvc.Models;
 
 namespace scraping_mvc.Controllers {
@@ -21,26 +22,26 @@ namespace scraping_mvc.Controllers {
             return val != "" ? Convert.ToInt32 (val) : 0;
         }
 
-        public class CaseInsensitiveComparer : IComparer<FoodItem> {
+        public class CaseInsensitiveComparer<T> : IComparer<IFoodAbstract> {
 
             public SortingEnum Sortparam { get; set; }
             public CaseInsensitiveComparer (SortingEnum sortparam) {
                 Sortparam = sortparam;
             }
 
-            int TitleComparer (FoodItem x, FoodItem y) {
+            int TitleComparer<T> (T x, T y) where T : IFoodAbstract {
                 return extractNumber(x.Title) > extractNumber(y.Title) ? 1 : extractNumber(x.Title) == extractNumber(y.Title) ? x.Title.ToLower().CompareTo (y.Title.ToLower()) : -1;
             }
 
-            int CategoryComparer (FoodItem x, FoodItem y) {
+            int CategoryComparer<T> (T x, T y)  where T : IFoodAbstract{
                 return x.Category.CompareTo(y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer(x, y) : -1;
             }
 
-            int PriceComparer (FoodItem x, FoodItem y) {
+            int PriceComparer<T> (T x, T y) where T : IFoodAbstract {
                  return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer(x, y) : -1;
             }
 
-            public int Compare (FoodItem x, FoodItem y) {
+            public int Compare (IFoodAbstract x, IFoodAbstract y)   {
                 if (Sortparam == SortingEnum.Category) {
                     return CategoryComparer(x,y);
                 } else if (Sortparam == SortingEnum.Price) {
@@ -51,16 +52,20 @@ namespace scraping_mvc.Controllers {
                     throw new NotSupportedException ();
                 }
             }
+
         }
 
-        public static IEnumerable<FoodItem> Result { get; set; }
-        public async static Task<IEnumerable<FoodItem>> Process (QueryObject obj, FoodItemsContext context) {
-            var list = context.FoodItems.Where (item => item.Price <= obj.PriceMax)
+        // public static IEnumerable<T> Result { get; set; }
+        public async static Task<IEnumerable<T>> Process<T> (QueryObject obj, FoodItemsContext context, bool isFood) where T : FoodAbstract {
+            
+            IEnumerable<T> list =  isFood ? context.FoodItems as IEnumerable<T> : context.LunchItems as IEnumerable<T> ;
+                list = list
+                .Where (item => item.Price <= obj.PriceMax)
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
                 .AsEnumerable ()
-                .OrderBy (item => item, new CaseInsensitiveComparer (obj.Sorting));
+                .OrderBy(item => item, new CaseInsensitiveComparer<T> (obj.Sorting));
 
             return obj.SortIsDown ? list : list.Reverse ();
 

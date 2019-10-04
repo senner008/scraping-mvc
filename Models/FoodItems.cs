@@ -2,8 +2,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace scraping_mvc.Models {
+    public interface IFoodAbstract
+    {
+        int Id { get; set; }
+        string Title { get; set; }
+        string Description { get; set; }
+        int Price { get; set; }
+        string Category { get; set; }
+    }
 
-    public abstract class FoodAbstract
+    public abstract class FoodAbstract : IFoodAbstract
     {
         [Key]
         public int Id { get; set; }
