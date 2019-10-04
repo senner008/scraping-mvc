@@ -101,12 +101,22 @@ body {
   margin : 0 !important;
 }
 
-.sorting-class {
+.input-container.header {
+  width: 100%;
+}
+
+.label-align-class {
   padding: 0;
   display: flex;
   align-items: center;
   padding-bottom: 5px;
   justify-content: center;
+}
+
+.label-align-class.font-increase {
+  font-size: 20px;
+  justify-content: flex-start;
+  padding-left: 10px;
 }
 
 .li-title {
@@ -138,4 +148,18 @@ body {
 
  .sort-direction-up {
    display : none !important;
+ }
+
+ .header-main {
+   background: #6c757d;
+   width: 100%;
+   height: 40px;
+   color: ghostwhite;
+   margin-bottom: 0 !important;
+
+ }
+
+ .database-icon {
+   padding-right: 10px;
+   margin-left: 2px;
  }

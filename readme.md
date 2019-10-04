@@ -6,4 +6,8 @@
 
 
 # Todo :
-- Seed to in-memory on start
+- Seed to in-memory on start DONE
+- add autocomplete to category
+- switch between LINQ and js methods - DONE
+- add Routing
+- make js and linq comparers equal

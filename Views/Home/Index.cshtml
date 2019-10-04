@@ -4,7 +4,13 @@
 
    
         <div id="titleText">
-            <h1>Søg i menu</h1>
+            <div class="input-container header mb-3 btn-group btn-group-toggle" data-toggle="buttons">   
+                    <button class="icon-toggle jsdb input-group-text" style="background: white"><i class="fas fa-database"></i></button>
+                    <h1 class="label-align-class font-increase btn btn-secondary active">
+                       Søg i Menu
+                    </h1>
+                </div>
+       
             <button id="spinnerButton" class="btn btn-primary">
                 <span class="spinner-border spinner-border-sm"></span>
             </button>
@@ -32,14 +38,14 @@
                     </select>
                 </div>
                 <div class="input-container col-md-4 mb-3 btn-group btn-group-toggle" data-toggle="buttons">   
-                    <button class="sort-direction input-group-text" style="background: white"><i class="sort-direction-down fas fa-sort-amount-down-alt"></i></button>
-                    <label class="sorting-class btn btn-secondary active">
+                    <button class="icon-toggle sort input-group-text" style="background: white"><i class="sort-direction-down fas fa-sort-amount-down-alt"></i></button>
+                    <label class="label-align-class sort btn btn-secondary active">
                         <input type="radio" name="category" id="option1" autocomplete="off" checked>Kategori
                     </label>
-                    <label class="sorting-class btn btn-secondary">
+                    <label class="label-align-class sort btn btn-secondary">
                         <input type="radio" name="title" id="option2" autocomplete="off">Titel
                     </label>
-                    <label class="sorting-class btn btn-secondary">
+                    <label class="label-align-class sort btn btn-secondary">
                         <input type="radio" name="price" id="option3" autocomplete="off">Pris
                     </label>
                 </div>
