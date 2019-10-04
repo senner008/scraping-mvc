@@ -29,7 +29,7 @@ namespace scraping_mvc {
                 await Seed<LunchItem> ("https://senner-puppeteer-app.herokuapp.com/lunch", "");
             }
 
-            if (Env.IsDevelopment ()) {
+            else if (Env.IsDevelopment ()) {
                 await Seed<FoodItem> ("http://localhost:1234/foods", "");
                 await Seed<LunchItem> ("http://localhost:1234/lunch", "");
             }

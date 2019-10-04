@@ -29,15 +29,15 @@ namespace scraping_mvc.Controllers {
                 Sortparam = sortparam;
             }
 
-            int TitleComparer<T> (T x, T y) where T : IFoodAbstract {
+            int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
                 return extractNumber(x.Title) > extractNumber(y.Title) ? 1 : extractNumber(x.Title) == extractNumber(y.Title) ? x.Title.ToLower().CompareTo (y.Title.ToLower()) : -1;
             }
 
-            int CategoryComparer<T> (T x, T y)  where T : IFoodAbstract{
+            int CategoryComparer<U> (U x, U y)  where U : IFoodAbstract{
                 return x.Category.CompareTo(y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer(x, y) : -1;
             }
 
-            int PriceComparer<T> (T x, T y) where T : IFoodAbstract {
+            int PriceComparer<U> (U x, U y) where U : IFoodAbstract {
                  return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer(x, y) : -1;
             }
 
