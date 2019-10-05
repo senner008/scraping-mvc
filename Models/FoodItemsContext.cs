@@ -23,16 +23,16 @@ namespace scraping_mvc {
         protected override async void OnModelCreating (ModelBuilder modelBuilder) {
             
             // if in development or on Heroku
-            if (Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") {
+            if (Env.IsDevelopment () || Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") {
 
                 await Seed<FoodItem> ("https://senner-puppeteer-app.herokuapp.com/foods", "");
                 await Seed<LunchItem> ("https://senner-puppeteer-app.herokuapp.com/lunch", "");
             }
 
-            else if (Env.IsDevelopment ()) {
-                await Seed<FoodItem> ("http://localhost:1234/foods", "");
-                await Seed<LunchItem> ("http://localhost:1234/lunch", "");
-            }
+            // else if (Env.IsDevelopment ()) {
+            //     await Seed<FoodItem> ("http://localhost:1234/foods", "");
+            //     await Seed<LunchItem> ("http://localhost:1234/lunch", "");
+            // }
 
                 async Task Seed<T> (string url, string query) where T : class {
                     List<FoodItem> FoodItemsLocal = new List<FoodItem> ();
