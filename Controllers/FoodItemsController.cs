@@ -25,9 +25,19 @@ namespace scraping_mvc.Controllers
         [Route("Fooditems")]
         public async Task<IActionResult> GetAllFoods()
         {
-            // var firstCategory = await _fooditemsContext.FoodItems.ToListAsync();  
             var queryobject = new QueryObject();
             var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext, true);
+            return Ok(res);
+        }
+
+        
+        [HttpGet]
+        [Route("LunchItems")]
+        public async Task<IActionResult> GetAllLunch()
+        {
+
+            var queryobject = new QueryObject();
+            var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext, true);
             return Ok(res);
         }
 
@@ -49,13 +59,6 @@ namespace scraping_mvc.Controllers
             return Ok(res);
         }
 
-        [HttpGet]
-        [Route("LunchItems")]
-        public async Task<IActionResult> GetAllLunch()
-        {
-            var firstCategory = await _fooditemsContext.LunchItems.ToListAsync();  
-            return Ok(firstCategory);
-        }
 
     }
 }
