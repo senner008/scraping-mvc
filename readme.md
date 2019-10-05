@@ -12,4 +12,4 @@
 - add Routing
 - make js and linq comparers equal
 - Get list with default query object for js
-- Fix Culture Compare on server ( Å-A)
+- Fix Culture Compare on server ( Å-A) - DONE
