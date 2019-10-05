@@ -59,6 +59,10 @@ Array.prototype.reverseCondition = function () {
     return this;
 }
 
+String.prototype.incNoCase = function (substr) {
+    return this.toLowerCase().includes(substr.toLowerCase())
+}
+
 
 function reverseCondition() {
   
@@ -111,42 +115,56 @@ function filterQuery() {
 }
 
 function titleComparer(a,b) {
-    return extractnumber(a.title) > extractnumber(b.title) ? 1 : extractnumber(a.title) === extractnumber(b.title) ? ((a.title.toLowerCase() > b.title.toLowerCase()) ? 1 : -1) : -1;
+    const aNumber = extractnumber(a.title);
+    const bNumber = extractnumber(b.title);
+    const aTitle = a.title.toLowerCase();
+    const bTitle = b.title.toLowerCase();
+    return aNumber > bNumber ? 1 : aNumber === bNumber ? ((aTitle > bTitle) ? 1 : -1) : -1;
 }
 
 async function filterQueryJS() {
     var listname = queryObject.isLunch ? "lunchlist" : "foodlist";
-    console.log(listname)
     return localParams[listname] 
+
         .filter(p => p.price <= queryObject.priceMax)
-        .filter(d => d.description.toLowerCase().includes(queryObject.description))
-        .filter(d => d.category.toLowerCase().includes(queryObject.category))
-        .filter(d => d.title.toLowerCase().includes(queryObject.title))
-        .slice(0).sort((a, b) => {
+        .filter(d => d.description.incNoCase(queryObject.description))
+        .filter(d => d.category.incNoCase(queryObject.category))
+        .filter(d => d.title.incNoCase(queryObject.title))
+        .slice(0)
+        .sort((a, b) => {
             const sortProp = queryObject.sorting;
+            const aSort = (typeof a[sortProp] === "string") ? a[sortProp].toLowerCase() : a[sortProp];
+            const bSort = (typeof b[sortProp] === "string") ? b[sortProp].toLowerCase() : b[sortProp];
+
             if (sortProp === "title") {
                 return titleComparer(a,b);
             }
-            if (sortProp === "category") {
-                return a[sortProp].toLowerCase() > b[sortProp].toLowerCase() ? 1 : a[sortProp].toLowerCase() == b[sortProp].toLowerCase() ? titleComparer(a,b) : -1
+            if (sortProp === "category" || sortProp === "price" ) {
+                return aSort > bSort ? 1 : aSort == bSort ? titleComparer(a,b) : -1
             }
-            return a[sortProp] > b[sortProp] ? 1 : a[sortProp] == b[sortProp] ? titleComparer(a,b) : -1
+         
         })
         .reverseCondition();
-
 }
 
 async function filterQueryDB(route, data = null) {
-    console.log("filter db")
     var result = await postData("query/" + route , data);
-    console.log(result)
     return result;
+}
+
+function formatToList() {
+    
 }
 
 
 async function arrayToList(arr) {
     var resultarr = await arr;
-    return resultarr.map(item => "<li class='list-group-item'>" + "<span class='li-category'>" + item.category + "</span>" + "-  " + "<span class='li-title'>" + item.title + "</span>" + "<span class='li-description'>" + item.description + "</span>" + "<span class='li-price'>" + item.price + "</span>" + "</li>");
+    return resultarr.map(item => "<li class='list-group-item'>" + 
+    "<span class='li-category'>" + item.category + "</span>" + 
+    "-  " + 
+    "<span class='li-title'>" + item.title + "</span>" + 
+    "<span class='li-description'>" + item.description + "</span>" + 
+    "<span class='li-price'>" + item.price + "</span>" + "</li>");
 }
 
 async function renderlist(list) {
@@ -166,7 +184,6 @@ $(document).ready(async function () {
     textInputSearch("#priceSearch", function (e) {
 
         queryObject.priceMax = e.target.value || 100000;
-        console.log(queryObject.priceMax)
         renderlist(filterQuery())
     });
     textInputSearch("#descriptionSearch", function (e) {
