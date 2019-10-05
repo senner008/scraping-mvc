@@ -4,7 +4,6 @@
 # Demo (Heroku Scraping to InMemory)
 - https://scraping-mvc.herokuapp.com/
 
-
 # Todo :
 - Seed to in-memory on start DONE
 - add autocomplete to category
