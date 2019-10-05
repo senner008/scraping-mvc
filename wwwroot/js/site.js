@@ -156,8 +156,8 @@ async function renderlist(list) {
 $(document).ready(async function () {
     reverseCondition();
     setDataSource();
-    localParams.foodlist = await filterQueryDB("FoodItems");
-    localParams.lunchlist = await filterQueryDB("LunchItems");
+    localParams.foodlist = await fetch("FoodItems/all").then(res => res.json());
+    localParams.lunchlist = await fetch("LunchItems/all").then(res => res.json());
     document.querySelector("#process-information").innerHTML = "Loaded";
 
     renderlist(filterQuery());
@@ -186,6 +186,7 @@ $(document).ready(async function () {
 });
 
 async function postData(url = '', data = {}) {
+    console.log(data)
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.

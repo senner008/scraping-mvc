@@ -10,7 +10,7 @@ using scraping_mvc.Models;
 
 namespace scraping_mvc.Controllers
 {
-
+    [ApiController]
     public class FoodItemsController : ControllerBase
     {
 
@@ -21,10 +21,30 @@ namespace scraping_mvc.Controllers
             _fooditemsContext.Database.EnsureCreated();
         }
 
+        [HttpGet]
+        [Route("FoodItems/all")]
+        public async Task<IActionResult> GetAllFoods()
+        {
+             var queryobject = new QueryObject();
+            var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext, true);
+
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("LunchItems/all")]
+        public async Task<IActionResult> GetAllLunch()
+        {
+            var queryobject = new QueryObject();
+            var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext, true);
+
+            return Ok(res);
+        }
+
 
         [HttpPost]
         [Route("Query/FoodItems")]
-        public async Task<IActionResult> GetAllFoods(QueryObject queryobject)
+        public async Task<IActionResult> GetFoods(QueryObject queryobject)
         {
             var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext, true);
 
@@ -33,7 +53,7 @@ namespace scraping_mvc.Controllers
 
         [HttpPost]
         [Route("Query/LunchItems")]
-        public async Task<IActionResult> GetAllLunch(QueryObject queryobject)
+        public async Task<IActionResult> GetLunch(QueryObject queryobject)
         {
             var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext, false);
 
