@@ -116,6 +116,7 @@ function titleComparer(a,b) {
 
 async function filterQueryJS() {
     var listname = queryObject.isLunch ? "lunchlist" : "foodlist";
+    console.log(listname)
     return localParams[listname] 
         .filter(p => p.price <= queryObject.priceMax)
         .filter(d => d.description.includes(queryObject.description))
