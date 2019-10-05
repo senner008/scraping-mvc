@@ -8,7 +8,9 @@
 - Seed to in-memory on start DONE
 - add autocomplete to category
 - switch between LINQ and js methods - DONE
-- add Routing
+- change post request to get with query object deconstucted to query params.
 - make js and linq comparers equal
 - Get list with default query object for js
 - Fix Culture Compare on server ( Å-A) - DONE
+- preload font-awesome icons
+  

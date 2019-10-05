@@ -69,7 +69,6 @@ function reverseCondition() {
     }
 
     document.querySelector(".icon-toggle.sort").addEventListener("click", function (e) {
-        console.log('clicking')
         var elem;
         if (e.target.childNodes.length > 0) {
             elem = e.target.querySelector("i");
@@ -108,8 +107,7 @@ function setDataSource() {
 }
 
 function filterQuery() {
-    console.log("filter query")
-    return localParams.isJs ? filterQueryJS() : filterQueryDB();
+    return localParams.isJs ? filterQueryJS() : filterQueryDB((queryObject.isLunch ? "LunchItems" : "FoodItems"), queryObject);
 }
 
 function titleComparer(a,b) {
@@ -117,13 +115,7 @@ function titleComparer(a,b) {
 }
 
 async function filterQueryJS() {
-    console.log("filter js")
-    var listname = queryObject.isLunch ? "foodlist" : "lunchlist";
-    // TODO : Get list with default query object
-    if (!localParams[listname].length){
-        console.log("fetching from db...")
-        localParams[listname] = await filterQueryDB();
-    } 
+    var listname = queryObject.isLunch ? "lunchlist" : "foodlist";
     return localParams[listname] 
         .filter(p => p.price <= queryObject.priceMax)
         .filter(d => d.description.includes(queryObject.description))
@@ -143,9 +135,10 @@ async function filterQueryJS() {
 
 }
 
-async function filterQueryDB() {
+async function filterQueryDB(route, data = null) {
     console.log("filter db")
-    var result = await postData("query/" + (queryObject.isLunch ? "LunchItems" : "FoodItems") , queryObject);
+    var result = await postData("query/" + route , data);
+    console.log(result)
     return result;
 }
 
@@ -163,8 +156,8 @@ async function renderlist(list) {
 $(document).ready(async function () {
     reverseCondition();
     setDataSource();
-    // foodlist = await getList("/FoodItems");
-    // lunchlist = await getList("/LunchItems");
+    localParams.foodlist = await filterQueryDB("FoodItems");
+    localParams.lunchlist = await filterQueryDB("LunchItems");
     document.querySelector("#spinnerButton").remove();
 
 
@@ -184,7 +177,6 @@ $(document).ready(async function () {
         renderlist(filterQuery())
     })
     textInputSearch("#titleSearch", function (e) {
-        console.log('hello')
         queryObject.title = e.target.value.toLowerCase();
         renderlist(filterQuery())
     })
@@ -192,14 +184,10 @@ $(document).ready(async function () {
     isLunch();
     sortSelect();
 
-    // var result = await postData("query/FoodItems", queryObject);
-    // console.log(result);
-
-
-
 });
 
 async function postData(url = '', data = {}) {
+    console.log(data)
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
