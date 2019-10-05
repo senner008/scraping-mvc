@@ -119,6 +119,7 @@ function titleComparer(a,b) {
 async function filterQueryJS() {
     console.log("filter js")
     var listname = queryObject.isLunch ? "foodlist" : "lunchlist";
+    // TODO : Get list with default query object
     if (!localParams[listname].length){
         console.log("fetching from db...")
         localParams[listname] = await filterQueryDB();
