@@ -165,7 +165,8 @@ $(document).ready(async function () {
     
     textInputSearch("#priceSearch", function (e) {
 
-        queryObject.priceMax = e.target.value;
+        queryObject.priceMax = e.target.value || 100000;
+        console.log(queryObject.priceMax)
         renderlist(filterQuery())
     });
     textInputSearch("#descriptionSearch", function (e) {
