@@ -36,7 +36,7 @@ namespace scraping_mvc.Controllers
         public async Task<IActionResult> GetAllLunch()
         {
             var queryobject = new QueryObject();
-            var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext, true);
+            var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext, false);
 
             return Ok(res);
         }
