@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,11 +31,11 @@ namespace scraping_mvc.Controllers {
             }
 
             int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
-                return extractNumber(x.Title) > extractNumber(y.Title) ? 1 : extractNumber(x.Title) == extractNumber(y.Title) ? x.Title.ToLower().CompareTo (y.Title.ToLower()) : -1;
+                return extractNumber(x.Title) > extractNumber(y.Title) ? 1 : extractNumber(x.Title) == extractNumber(y.Title) ?  String.Compare(x.Title,y.Title, true, new CultureInfo("da-DK")) : -1;
             }
 
             int CategoryComparer<U> (U x, U y)  where U : IFoodAbstract{
-                return x.Category.CompareTo(y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer(x, y) : -1;
+                return String.Compare(x.Category,y.Category, true, new CultureInfo("da-DK")) > 0 ? 1 : x.Category == y.Category ? TitleComparer(x, y) : -1;
             }
 
             int PriceComparer<U> (U x, U y) where U : IFoodAbstract {
