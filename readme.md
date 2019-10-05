@@ -12,5 +12,6 @@
 - make js and linq comparers equal
 - Get list with default query object for js
 - Fix Culture Compare on server ( Å-A) - DONE
+- Display Scraping process in UI
 - preload font-awesome icons
   
