@@ -119,9 +119,9 @@ async function filterQueryJS() {
     console.log(listname)
     return localParams[listname] 
         .filter(p => p.price <= queryObject.priceMax)
-        .filter(d => d.description.includes(queryObject.description))
-        .filter(d => d.category.includes(queryObject.category))
-        .filter(d => d.title.includes(queryObject.title))
+        .filter(d => d.description.toLowerCase().includes(queryObject.description))
+        .filter(d => d.category.toLowerCase().includes(queryObject.category))
+        .filter(d => d.title.toLowerCase().includes(queryObject.title))
         .slice(0).sort((a, b) => {
             const sortProp = queryObject.sorting;
             if (sortProp === "title") {
