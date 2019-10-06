@@ -6,12 +6,13 @@
 
 # Todo :
 - Seed to in-memory on start DONE
-- add autocomplete to category
 - switch between LINQ and js methods - DONE
+- Get list with default query object for js - DONE
+- Fix Culture Compare on server ( Å-A) - DONE
+- preload font-awesome icons - DONE
+- create filterClass for js - with optimized combined filter actions
 - change post request to get with query object deconstucted to query params.
 - make js and linq comparers equal
-- Get list with default query object for js
-- Fix Culture Compare on server ( Å-A) - DONE
 - Display Scraping process in UI
-- preload font-awesome icons
+
   
