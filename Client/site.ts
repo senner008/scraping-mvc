@@ -171,10 +171,10 @@ async function renderlist(list: any) {
     var top = `<table class='table'>
     <thead>
         <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Title</th>
-            <th scope="col">Dexcription</th>
-            <th scope="col">Price</th>
+            <th scope="col">Kategori</th>
+            <th scope="col">Titel</th>
+            <th scope="col">Indhold</th>
+            <th scope="col">Max pris</th>
         </tr>
     </thead>
     <tbody>`;
