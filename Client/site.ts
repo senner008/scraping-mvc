@@ -2,7 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-function extractnumber(val) {
+function extractnumber(val : string) {
     if (!val) return Number.MAX_VALUE
     var match = val.toString().match(/\d+/);
     if (match) return Number(match[0]);
@@ -12,8 +12,9 @@ function extractnumber(val) {
 
 function sortSelect () {
     var selectAll = document.querySelectorAll(".label-align-class.sort");
-    Array.from(selectAll).forEach(select=> select.addEventListener("click", function (e) {
-       var findName = e.target.querySelector("input").name;
+    Array.from(selectAll).forEach(select=> select.addEventListener("click", function (e : Event) {
+       var elem = e.target as HTMLLabelElement; 
+       var findName = elem.querySelector("input").name;
        queryObject.sorting = findName;
        renderlist(filterQuery())
     }))
@@ -28,7 +29,8 @@ function textInputSearch(selector, callback) {
 
 function isLunch() {
     var input = document.querySelector("#lunchSelect");
-    input.addEventListener("change", function (e) {
+    input.addEventListener("change", function (e : any) {
+        
         var index = e.target.options[e.target.selectedIndex].value
         queryObject.isLunch = Number(index) === 1 ? false : true
         renderlist(filterQuery())
@@ -52,14 +54,14 @@ var localParams = {
 }
 
 
-Array.prototype.reverseCondition = function () {
+;(Array.prototype as any).reverseCondition = function () {
     if (!queryObject.sortIsDown) {
        return this.slice(0).reverse();
     }
     return this;
 }
 
-String.prototype.incNoCase = function (substr) {
+;(String.prototype as any).incNoCase = function (substr) {
     return this.toLowerCase().includes(substr.toLowerCase())
 }
 
@@ -72,7 +74,7 @@ function reverseCondition() {
         return elem.classList[2].includes("down");
     }
 
-    document.querySelector(".icon-toggle.sort").addEventListener("click", function (e) {
+    document.querySelector(".icon-toggle.sort").addEventListener("click", function (e: any) {
         var elem;
         if (e.target.childNodes.length > 0) {
             elem = e.target.querySelector("i");
@@ -95,7 +97,7 @@ function setDataSource() {
         return elem.classList[1].includes("js");
     }
 
-    document.querySelector(".icon-toggle.jsdb").addEventListener("click", function (e) {
+    document.querySelector(".icon-toggle.jsdb").addEventListener("click", function (e : any) {
         var elem;
         if (e.target.childNodes.length > 0) {
             elem = e.target.querySelector("i");
@@ -125,7 +127,6 @@ function titleComparer(a,b) {
 async function filterQueryJS() {
     var listname = queryObject.isLunch ? "lunchlist" : "foodlist";
     return localParams[listname] 
-
         .filter(p => p.price <= queryObject.priceMax)
         .filter(d => d.description.incNoCase(queryObject.description))
         .filter(d => d.category.incNoCase(queryObject.category))
@@ -147,7 +148,7 @@ async function filterQueryJS() {
         .reverseCondition();
 }
 
-async function filterQueryDB(route, data = null) {
+async function filterQueryDB(route : any, data :any = null) {
     var result = await postData("query/" + route , data);
     return result;
 }
@@ -156,23 +157,37 @@ function formatToList() {
     
 }
 
-
-async function arrayToList(arr) {
+async function arrayToList(arr : any) {
     var resultarr = await arr;
-    return resultarr.map(item => "<li class='list-group-item'>" + 
-    "<span class='li-category'>" + item.category + "</span>" + 
-    "-  " + 
-    "<span class='li-title'>" + item.title + "</span>" + 
-    "<span class='li-description'>" + item.description + "</span>" + 
-    "<span class='li-price'>" + item.price + "</span>" + "</li>");
+    return resultarr.map((item : any) => "<tr><td class='li-category'>" + item.category + "</td>" + 
+    "<td class='li-title'>" + item.title + "</td>" + 
+    "<td class='li-description'>" + item.description + "</td>" + 
+    "<td class='li-price'>" + item.price + "</td></tr>"
+    );
 }
 
-async function renderlist(list) {
+async function renderlist(list: any) {
 
-    document.querySelector("#listUl").innerHTML = (await arrayToList(list)).join("")
+    var top = `<table class='table'>
+    <thead>
+        <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Title</th>
+            <th scope="col">Dexcription</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>`;
+
+    const  middle = (await arrayToList(list)).join("");
+    console.log(middle)
+
+    const bottom = "</tbody></table>";
+
+    document.querySelector("#listUl").innerHTML = top + middle + bottom;
 }
 
-$(document).ready(async function () {
+(async function init() {
     reverseCondition();
     setDataSource();
     localParams.foodlist = await fetch("FoodItems/all").then(res => res.json());
@@ -202,7 +217,7 @@ $(document).ready(async function () {
     isLunch();
     sortSelect();
 
-});
+}());
 
 async function postData(url = '', data = {}) {
     console.log(data)

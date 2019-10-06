@@ -15,6 +15,10 @@ jobs:
         dotnet-version: 2.2.402
     - name: Build with dotnet
       run: dotnet build --configuration Release 
+    - name: Client project setup
+      run: npm install
+    - name: Client compile and minify for production
+      run: npm run build-prod
     - name: Publishing the API Web
       run: dotnet publish --configuration Release --output ./Release ./scraping-mvc.csproj
     - name: Deploy to Azure
