@@ -2,7 +2,6 @@ import {state, localState} from "./state"
 import titleComparer from "./comparers";
 import postData from "./postData";
 
-
 export default function filterQuery() {
     return localState.getValue("isJs") ? filterQueryJS() : filterQueryDB((state.getValue("isLunch") ? "LunchItems" : "FoodItems"))
 }

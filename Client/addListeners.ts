@@ -1,6 +1,3 @@
-
-
-
 export function sortSelect (selector, callback) {
     var selectAll = document.querySelectorAll(selector);
     Array.from(selectAll).forEach(select=> select.addEventListener("click", function (e : Event) {

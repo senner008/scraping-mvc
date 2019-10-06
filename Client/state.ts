@@ -1,5 +1,6 @@
 import stateObject from "./stateInit";
 import filterQuery from "./filter";
+import renderList from "./renderList";
 
 var state = stateObject({
     isLunch: false,
@@ -9,13 +10,13 @@ var state = stateObject({
     title: "",
     sorting: "category",
     sortIsDown : true,
-}, filterQuery);
+}, renderList, filterQuery);
 
 var localState = stateObject({
     isJs : false,
     foodlist : [],
     lunchlist : []
-}, filterQuery);
+}, renderList, filterQuery);
 
 export {
     state,
