@@ -194,7 +194,7 @@ async function renderlist(list: any) {
     localParams.lunchlist = await fetch("LunchItems/all").then(res => res.json());
     
 
-    renderlist(filterQuery());
+    await renderlist(filterQuery());
     
     textInputSearch("#priceSearch", function (e) {
 
