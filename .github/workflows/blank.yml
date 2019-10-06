@@ -18,7 +18,7 @@ jobs:
     - name: Client project setup
       run: npm install
     - name: Client compile and minify for production
-      run: npm run build-prod
+      run: npm run build
     - name: Publishing the API Web
       run: dotnet publish --configuration Release --output ./Release ./scraping-mvc.csproj
     - name: Deploy to Azure
