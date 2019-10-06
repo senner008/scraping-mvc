@@ -162,7 +162,7 @@ async function arrayToList(arr : any) {
     return resultarr.map((item : any) => "<tr><td class='li-category'>" + item.category + "</td>" + 
     "<td class='li-title'>" + item.title + "</td>" + 
     "<td class='li-description'>" + item.description + "</td>" + 
-    "<td class='li-price'>" + item.price + "</td></tr>"
+    "<td class='li-price'>" + item.price + "Dk</td></tr>"
     );
 }
 
@@ -174,7 +174,7 @@ async function renderlist(list: any) {
             <th scope="col">Kategori</th>
             <th scope="col">Titel</th>
             <th scope="col">Indhold</th>
-            <th scope="col">Max pris</th>
+            <th scope="col">Pris</th>
         </tr>
     </thead>
     <tbody>`;
