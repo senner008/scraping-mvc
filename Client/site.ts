@@ -192,7 +192,7 @@ async function renderlist(list: any) {
     setDataSource();
     localParams.foodlist = await fetch("FoodItems/all").then(res => res.json());
     localParams.lunchlist = await fetch("LunchItems/all").then(res => res.json());
-    document.querySelector("#process-information").innerHTML = "Loaded";
+    
 
     renderlist(filterQuery());
     
@@ -216,6 +216,7 @@ async function renderlist(list: any) {
 
     isLunch();
     sortSelect();
+    document.querySelector("#process-information").innerHTML = "Loaded";
 
 }());
 
