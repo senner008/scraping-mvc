@@ -14,8 +14,7 @@ async function arrayToList(arr : any) {
 
 export default async function renderlist(list: any) {
 
-    var top = `
-    <table class='table'>
+    var top = `<table class='table'>
     <thead>
         <tr>
             <th scope="col">Kategori</th>
@@ -27,7 +26,7 @@ export default async function renderlist(list: any) {
     <tbody>`;
 
     const bottom = "</tbody></table>";
-    const  middle = (await arrayToList(list)).join("");
+    const middle = (await arrayToList(list)).join("");
 
     document.querySelector("#listUl").innerHTML = top + middle + bottom;
 }

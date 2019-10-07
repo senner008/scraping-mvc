@@ -10,12 +10,12 @@ using scraping_mvc.Models;
 
 namespace scraping_mvc.Controllers {
 
-    public static class MyExtensions {
-        public static object GetProperty<T> (this T obj, string name) where T : class {
-            Type t = typeof (T);
-            return t.GetProperty (name).GetValue (obj, null);
-        }
-    }
+    // public static class MyExtensions {
+    //     public static object GetProperty<T> (this T obj, string name) where T : class {
+    //         Type t = typeof (T);
+    //         return t.GetProperty (name).GetValue (obj, null);
+    //     }
+    // }
     public static class QueryResult {
 
         public static int extractNumber (string str) {
@@ -57,15 +57,16 @@ namespace scraping_mvc.Controllers {
         }
 
         // public static IEnumerable<T> Result { get; set; }
-        public async static Task<IEnumerable<T>> Process<T> (QueryObject obj, FoodItemsContext context, bool isFood) where T : FoodAbstract {
+        public async static Task<IEnumerable<T>> Process<T> (QueryObject obj, FoodItemsContext context) where T : FoodAbstract {
             
-            IEnumerable<T> list =  isFood ? context.FoodItems as IEnumerable<T> : context.LunchItems as IEnumerable<T> ;
+            IEnumerable<T> list = typeof(T).Name  == "FoodItem" ? context.FoodItems as IEnumerable<T> : context.LunchItems as IEnumerable<T> ;
                 list = list
                 .Where (item => item.Price <= obj.PriceMax)
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
                 .OrderBy(item => item, new CaseInsensitiveComparer<T> (obj.Sorting));
+                
 
             return obj.SortIsDown ? list : list.Reverse ();
 
