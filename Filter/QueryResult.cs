@@ -26,7 +26,7 @@ namespace scraping_mvc.Controllers {
         public class FoodPropsComparer<T> : IComparer<IFoodAbstract> {
 
             public SortingEnum Sortparam { get; set; }
-            public CaseInsensitiveComparer (SortingEnum sortparam) {
+            public FoodPropsComparer (SortingEnum sortparam) {
                 Sortparam = sortparam;
             }
 
