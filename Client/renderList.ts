@@ -15,7 +15,7 @@ async function arrayToList(arr : any) {
 export default async function renderlist(list: any) {
 
     var top = `
-    <table class='table table-striped'>
+    <table class='table'>
     <thead>
         <tr>
             <th scope="col">Kategori</th>
