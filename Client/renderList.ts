@@ -4,6 +4,7 @@ function formatToList() {
 
 async function arrayToList(arr : any) {
     var resultarr = await arr;
+    // shouldnt be named li-
     return resultarr.map((item : any) => "<tr><td class='li-category'>" + item.category + "</td>" +
     "<td class='li-title'>" + item.title + "</td>" +
     "<td class='li-description'>" + item.description + "</td>" +
@@ -14,7 +15,7 @@ async function arrayToList(arr : any) {
 export default async function renderlist(list: any) {
 
     var top = `
-    <table class='table'>
+    <table class='table table-striped'>
     <thead>
         <tr>
             <th scope="col">Kategori</th>
