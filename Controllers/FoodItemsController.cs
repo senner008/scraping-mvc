@@ -22,10 +22,20 @@ namespace scraping_mvc.Controllers
         }
 
         [HttpGet]
+        [Route("defaultquery")]
+        public IActionResult GetDefaultQuery()
+        {
+            var queryobject = new QueryObject();
+
+            return Ok(queryobject);
+        }
+
+
+        [HttpGet]
         [Route("FoodItems/all")]
         public async Task<IActionResult> GetAllFoods()
         {
-             var queryobject = new QueryObject();
+            var queryobject = new QueryObject();
             var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext, true);
 
             return Ok(res);

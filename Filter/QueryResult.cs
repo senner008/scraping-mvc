@@ -65,7 +65,6 @@ namespace scraping_mvc.Controllers {
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
-                .AsEnumerable ()
                 .OrderBy(item => item, new CaseInsensitiveComparer<T> (obj.Sorting));
 
             return obj.SortIsDown ? list : list.Reverse ();

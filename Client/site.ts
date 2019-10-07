@@ -1,17 +1,18 @@
 ﻿import {sortSelect, textInputSearch, isLunch, toggleIcon } from "./addListeners";
 import renderList from "./renderList"
-import {state, localState} from "./state";
+import {state, localState, initStates} from "./state";
 import filterQuery from "./filter";
-import getLists from "./getLists"
 
 ;(async function init() {
+
+    await initStates;
+    await renderList(filterQuery());
+
+    document.querySelector("#process-information").innerHTML = "Loaded";
 
     toggleIcon("fa-sort-amount-down-alt", "fa-sort-amount-up-alt", ".icon-toggle.sort", function (val) {
         state.setValue("sortIsDown", val);
     });
-    await renderList(filterQuery());
-    document.querySelector("#process-information").innerHTML = "Loaded";
-    await getLists();
 
     toggleIcon("fab fa-node-js","fas fa-database",".icon-toggle.jsdb", function (val) {
         localState.setValue("isJs", val);
