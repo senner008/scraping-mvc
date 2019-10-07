@@ -23,32 +23,38 @@ namespace scraping_mvc.Controllers {
             return val != "" ? Convert.ToInt32 (val) : 0;
         }
 
-        public class CaseInsensitiveComparer<T> : IComparer<IFoodAbstract> {
+        public class FoodPropsComparer<T> : IComparer<IFoodAbstract> {
 
             public SortingEnum Sortparam { get; set; }
             public CaseInsensitiveComparer (SortingEnum sortparam) {
                 Sortparam = sortparam;
             }
 
-            int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
-                return extractNumber(x.Title) > extractNumber(y.Title) ? 1 : extractNumber(x.Title) == extractNumber(y.Title) ?  String.Compare(x.Title,y.Title, true, new CultureInfo("da-DK")) : -1;
+            int StringComparer (string x, string y) {
+                return String.Compare (x, y, true, new CultureInfo ("da-DK"));
             }
 
-            int CategoryComparer<U> (U x, U y)  where U : IFoodAbstract{
-                return String.Compare(x.Category,y.Category, true, new CultureInfo("da-DK")) > 0 ? 1 : x.Category == y.Category ? TitleComparer(x, y) : -1;
+            int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
+                var xNumber = extractNumber (x.Title);
+                var yNumber = extractNumber (y.Title);
+                return xNumber > yNumber ? 1 : xNumber == yNumber ? StringComparer(x.Title, y.Title) : -1;
+            }
+
+            int CategoryComparer<U> (U x, U y) where U : IFoodAbstract {
+                return StringComparer(x.Category, y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer (x, y) : -1;
             }
 
             int PriceComparer<U> (U x, U y) where U : IFoodAbstract {
-                 return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer(x, y) : -1;
+                return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer (x, y) : -1;
             }
 
-            public int Compare (IFoodAbstract x, IFoodAbstract y)   {
+            public int Compare (IFoodAbstract x, IFoodAbstract y) {
                 if (Sortparam == SortingEnum.Category) {
-                    return CategoryComparer(x,y);
+                    return CategoryComparer (x, y);
                 } else if (Sortparam == SortingEnum.Price) {
-                    return PriceComparer(x,y);
-                }  else if (Sortparam == SortingEnum.Title) {
-                    return TitleComparer(x, y);
+                    return PriceComparer (x, y);
+                } else if (Sortparam == SortingEnum.Title) {
+                    return TitleComparer (x, y);
                 } else {
                     throw new NotSupportedException ();
                 }
@@ -58,15 +64,14 @@ namespace scraping_mvc.Controllers {
 
         // public static IEnumerable<T> Result { get; set; }
         public async static Task<IEnumerable<T>> Process<T> (QueryObject obj, FoodItemsContext context) where T : FoodAbstract {
-            
-            IEnumerable<T> list = typeof(T).Name  == "FoodItem" ? context.FoodItems as IEnumerable<T> : context.LunchItems as IEnumerable<T> ;
-                list = list
+
+            IEnumerable<T> list = typeof (T).Name == "FoodItem" ? context.FoodItems as IEnumerable<T> : context.LunchItems as IEnumerable<T>;
+            list = list
                 .Where (item => item.Price <= obj.PriceMax)
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
-                .OrderBy(item => item, new CaseInsensitiveComparer<T> (obj.Sorting));
-                
+                .OrderBy (item => item, new FoodPropsComparer<T> (obj.Sorting));
 
             return obj.SortIsDown ? list : list.Reverse ();
 
