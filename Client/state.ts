@@ -4,7 +4,7 @@ import renderList from "./renderList";
 
 var state = stateObject({
     isLunch: false,
-    priceMax: 10000,
+    priceMax: 100000,
     description: "",
     category: "",
     title: "",

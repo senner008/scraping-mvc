@@ -17,13 +17,18 @@ export default function filterQuery() {
     return this;
 }
 
+;(Array.prototype as any).filterBy = function (prop, func) {
+    // if value has default(empty) then skip filtering
+    return state.isDefault(prop) ? this : this.filter(func);
+}
+
 async function filterQueryJS() {
     var listname = state.getValue("isLunch") ? "lunchlist" : "foodlist";
     return localState.getValue(listname)
-        .filter(p => p.price <= state.getValue("priceMax"))
-        .filter(d => d.description.incNoCase(state.getValue("description")))
-        .filter(d => d.category.incNoCase(state.getValue("category")))
-        .filter(d => d.title.incNoCase(state.getValue("title")))
+        .filterBy("priceMax", p => p.price <= state.getValue("priceMax"))
+        .filterBy("description", d => d.description.incNoCase(state.getValue("description")))
+        .filterBy("category", d => d.category.incNoCase(state.getValue("category")))
+        .filterBy("title", d => d.title.incNoCase(state.getValue("title")))
         .slice(0)
         .sort((a, b) => {
             const sortProp = state.getValue("sorting")
