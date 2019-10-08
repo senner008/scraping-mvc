@@ -59,7 +59,6 @@ namespace scraping_mvc.Controllers {
                     throw new NotSupportedException ();
                 }
             }
-
         }
 
         // public static IEnumerable<T> Result { get; set; }
