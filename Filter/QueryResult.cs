@@ -64,10 +64,10 @@ namespace scraping_mvc.Controllers {
         }
 
         // public static IEnumerable<T> Result { get; set; }
-        public async static Task<IOrderedQueryable<T>> Process<T> (QueryObject obj, FoodItemsContext context) where T : FoodAbstract {
+        public async static Task<IEnumerable<T>> Process<T> (QueryObject obj, FoodItemsContext context) where T : FoodAbstract {
 
             
-            IOrderedQueryable<T> newlist = context.Set<T>()
+            IEnumerable<T> newlist = context.Set<T>()
                 .Where (item => item.Price <= obj.PriceMax)
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
@@ -76,8 +76,9 @@ namespace scraping_mvc.Controllers {
                     extractNumber((string)item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null)) : 
                     item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null))
                 .ThenBy(item =>  item.GetType().GetProperty("Title").GetValue(item, null));
+                
 
-            return newlist;
+              return obj.SortIsDown ? newlist.AsEnumerable() : newlist.AsEnumerable().Reverse ();
 
         }
     }
