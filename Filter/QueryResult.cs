@@ -66,6 +66,7 @@ namespace scraping_mvc.Controllers {
         // public static IEnumerable<T> Result { get; set; }
         public async static Task<IOrderedQueryable<T>> Process<T> (QueryObject obj, FoodItemsContext context) where T : FoodAbstract {
 
+            
             IOrderedQueryable<T> newlist = context.Set<T>()
                 .Where (item => item.Price <= obj.PriceMax)
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
