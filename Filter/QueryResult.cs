@@ -75,10 +75,10 @@ namespace scraping_mvc.Controllers {
                 .OrderBy (item => obj.Sorting == SortingEnum.Title ? 
                     extractNumber((string)item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null)) : 
                     item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null))
-                .ThenBy(item =>  item.GetType().GetProperty("Title").GetValue(item, null));
+                .ThenBy(item => item.GetType().GetProperty("Title").GetValue(item, null));
                 
 
-              return obj.SortIsDown ? newlist.AsEnumerable() : newlist.AsEnumerable().Reverse ();
+              return obj.SortIsDown ? newlist : newlist.Reverse ();
 
         }
     }
