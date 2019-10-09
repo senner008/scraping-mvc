@@ -72,6 +72,7 @@ namespace scraping_mvc.Controllers {
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
+                // still sorts in memory
                 .OrderBy (item => obj.Sorting == SortingEnum.Title ? 
                     extractNumber((string)item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null)) : 
                     item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null))
