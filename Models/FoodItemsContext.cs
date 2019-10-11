@@ -33,15 +33,15 @@ namespace scraping_mvc {
                 await Seed<LunchItem> ("http://localhost:1234/lunch", "");
             }
 
-                async Task Seed<T> (string url, string query) where T : class {
-                    List<FoodItem> FoodItemsLocal = new List<FoodItem> ();
+                async Task Seed<T> (string url, string query) where T : class, IFoodAbstract, new() {
+                    List<T> FoodItemsLocal = new List<T> ();
                     var httpGet = new HttpGet<IEnumerable<Foods>> (url, query);
                     try {
                         var foods = await httpGet.getJson ();
                         var id = 1;
                         foods.ToList ().ForEach (foodType => {
                             foodType.Content.ToList ().ForEach (food => {
-                                FoodItem fooditem = new FoodItem () { Id = id++, Title = food.Title, Description = food.Description, Price = Convert.ToInt32(food.Price), Category = foodType.Title };
+                                T fooditem = new T () { Id = id++, Title = food.Title, Description = food.Description, Price = Convert.ToInt32(food.Price), Category = foodType.Title };
                                 FoodItemsLocal.Add (fooditem);
                             });
                         });
