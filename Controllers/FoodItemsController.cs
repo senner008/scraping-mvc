@@ -52,9 +52,9 @@ namespace scraping_mvc.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("Query/FoodItems")]
-        public async Task<IActionResult> GetFoods(QueryObject queryobject)
+        public async Task<IActionResult> GetFoods([FromQuery] QueryObject queryobject)
         {
             var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext);
 

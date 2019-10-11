@@ -1,6 +1,6 @@
 import {state, localState} from "./state"
 import titleComparer from "./comparers";
-import postData from "./postData";
+import getQueryData from "./getQueryData";
 
 export default function filterQuery() {
     return localState.getValue("isJs") ? filterQueryJS() : filterQueryDB((state.getValue("isLunch") ? "LunchItems" : "FoodItems"))
@@ -47,6 +47,6 @@ async function filterQueryJS() {
 }
 
 async function filterQueryDB(route : any) {
-    var result = await postData("query/" + route, state.getObject());
+    var result = await getQueryData("query/" + route, state.getObject());
     return result;
 }
