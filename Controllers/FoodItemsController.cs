@@ -32,27 +32,6 @@ namespace scraping_mvc.Controllers
 
 
         [HttpGet]
-        [Route("FoodItems/all")]
-        public async Task<IActionResult> GetAllFoods()
-        {
-            var queryobject = new QueryObject();
-            var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext);
-
-            return Ok(res);
-        }
-
-        [HttpGet]
-        [Route("LunchItems/all")]
-        public async Task<IActionResult> GetAllLunch()
-        {
-            var queryobject = new QueryObject();
-            var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext);
-
-            return Ok(res);
-        }
-
-
-        [HttpGet]
         [Route("Query/FoodItems")]
         public async Task<IActionResult> GetFoods([FromQuery] QueryObject queryobject)
         {
@@ -61,15 +40,14 @@ namespace scraping_mvc.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Query/LunchItems")]
-        public async Task<IActionResult> GetLunch(QueryObject queryobject)
+        public async Task<IActionResult> GetLunch([FromQuery] QueryObject queryobject)
         {
             var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext);
 
             return Ok(res);
         }
-
 
     }
 }
