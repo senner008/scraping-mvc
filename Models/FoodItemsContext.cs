@@ -21,7 +21,7 @@ namespace scraping_mvc {
         public DbSet<LunchItem> LunchItems { get; set; }
 
         protected override async void OnModelCreating (ModelBuilder modelBuilder) {
-            
+       
             // if in development or on Heroku
             if (Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") {
 

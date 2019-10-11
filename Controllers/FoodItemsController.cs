@@ -14,39 +14,28 @@ namespace scraping_mvc.Controllers
     public class FoodItemsController : ControllerBase
     {
 
-         private readonly FoodItemsContext _fooditemsContext;
-        public FoodItemsController( FoodItemsContext foodItemsContext)
-        {
-            _fooditemsContext = foodItemsContext;
-            _fooditemsContext.Database.EnsureCreated();
-        }
+        private readonly IFoodItemsRepository _foodItemsRepository;
+        public FoodItemsController(IFoodItemsRepository foodItemsRepository) => _foodItemsRepository = foodItemsRepository;
 
         [HttpGet]
         [Route("defaultquery")]
         public IActionResult GetDefaultQuery()
         {
-            var queryobject = new QueryObject();
-
-            return Ok(queryobject);
+            return Ok(new QueryObject());
         }
-
 
         [HttpGet]
         [Route("Query/FoodItems")]
         public async Task<IActionResult> GetFoods([FromQuery] QueryObject queryobject)
         {
-            var res = await QueryResult.Process<FoodItem>(queryobject, _fooditemsContext);
-
-            return Ok(res);
+            return Ok(await _foodItemsRepository.GetFoods(queryobject));
         }
 
         [HttpGet]
         [Route("Query/LunchItems")]
         public async Task<IActionResult> GetLunch([FromQuery] QueryObject queryobject)
         {
-            var res = await QueryResult.Process<LunchItem>(queryobject, _fooditemsContext);
-
-            return Ok(res);
+            return Ok(await _foodItemsRepository.GetLunch(queryobject));
         }
 
     }

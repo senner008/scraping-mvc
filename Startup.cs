@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using scraping_mvc.Controllers;
 using scraping_mvc.Models;
 
 namespace scraping_mvc {
@@ -40,6 +41,8 @@ namespace scraping_mvc {
             if (HostingEnvironment.EnvironmentName == "Development" || Environment.GetEnvironmentVariable ("ASPNETCORE_ENVIRONMENT") == "Heroku") {
                 services.AddDbContext<FoodItemsContext> (options => options.UseInMemoryDatabase (databaseName: "BoardGames"));
             }
+            
+            services.AddScoped<IFoodItemsRepository, FoodItemsRepository>();
 
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
         }
