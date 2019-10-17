@@ -14,5 +14,6 @@
 - create filterClass for js - with optimized combined filter actions
 - make js and linq comparers equal
 - Display Scraping process in UI
+- Add FluentAssertions tests
 
   
