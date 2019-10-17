@@ -15,8 +15,8 @@ const State = (async function() {
 const LocalState = (async function() {
     const obj = {
         isJs : false,
-        foodlist : await fetch("FoodItems/all").then(res => res.json()),
-        lunchlist : await fetch("LunchItems/all").then(res => res.json())
+        foodlist : await fetch("Query/FoodItems").then(res => res.json()),
+        lunchlist : await fetch("Query/LunchItems").then(res => res.json())
     }
     return stateObject(obj, renderList, filterQuery);
 })();

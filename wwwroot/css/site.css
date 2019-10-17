@@ -224,3 +224,7 @@ table tbody tr .li-price {
     z-index: 1;
     border-radius: 2px;
 }
+
+#listUl {
+  -webkit-overflow-scrolling: touch;
+}

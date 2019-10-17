@@ -10,9 +10,10 @@
 - Get list with default query object for js - DONE
 - Fix Culture Compare on server ( Å-A) - DONE
 - preload font-awesome icons - DONE
+- change post request to get with query object deconstucted to query params. DONE
 - create filterClass for js - with optimized combined filter actions
-- change post request to get with query object deconstucted to query params.
 - make js and linq comparers equal
 - Display Scraping process in UI
+- Add FluentAssertions tests
 
   
