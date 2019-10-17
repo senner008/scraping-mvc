@@ -225,6 +225,6 @@ table tbody tr .li-price {
     border-radius: 2px;
 }
 
-#listUl {
+body {
   -webkit-overflow-scrolling: touch;
 }
