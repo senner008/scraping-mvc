@@ -10,12 +10,7 @@ using scraping_mvc.Models;
 
 namespace scraping_mvc.Controllers {
 
-    // public static class MyExtensions {
-    //     public static object GetProperty<T> (this T obj, string name) where T : class {
-    //         Type t = typeof (T);
-    //         return t.GetProperty (name).GetValue (obj, null);
-    //     }
-    // }
+
     public static class QueryResult {
 
         public static int extractNumber (string str) {
@@ -25,40 +20,39 @@ namespace scraping_mvc.Controllers {
 
         public class FoodPropsComparer<T> : IComparer<IFoodAbstract> {
 
-            // public SortingEnum Sortparam { get; set; }
-            // public FoodPropsComparer (SortingEnum sortparam) {
-            //     Sortparam = sortparam;
-            // }
+            public SortingEnum Sortparam { get; set; }
+            public FoodPropsComparer (SortingEnum sortparam) {
+                Sortparam = sortparam;
+            }
 
-            // int StringComparer (string x, string y) {
-            //     return String.Compare (x, y, true, new CultureInfo ("da-DK"));
-            // }
+            int StringComparer (string x, string y) {
+                return String.Compare (x, y, true, new CultureInfo ("da-DK"));
+            }
 
-            // int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
-            //     var xNumber = extractNumber (x.Title);
-            //     var yNumber = extractNumber (y.Title);
-            //     return xNumber > yNumber ? 1 : xNumber == yNumber ? StringComparer(x.Title, y.Title) : -1;
-            // }
+            int TitleComparer<U> (U x, U y) where U : IFoodAbstract {
+                var xNumber = extractNumber (x.Title);
+                var yNumber = extractNumber (y.Title);
+                return xNumber > yNumber ? 1 : xNumber == yNumber ? StringComparer(x.Title, y.Title) : -1;
+            }
 
-            // int CategoryComparer<U> (U x, U y) where U : IFoodAbstract {
-            //     return StringComparer(x.Category, y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer (x, y) : -1;
-            // }
+            int CategoryComparer<U> (U x, U y) where U : IFoodAbstract {
+                return StringComparer(x.Category, y.Category) > 0 ? 1 : x.Category == y.Category ? TitleComparer (x, y) : -1;
+            }
 
-            // int PriceComparer<U> (U x, U y) where U : IFoodAbstract {
-            //     return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer (x, y) : -1;
-            // }
+            int PriceComparer<U> (U x, U y) where U : IFoodAbstract {
+                return x.Price > y.Price ? 1 : x.Price == y.Price ? TitleComparer (x, y) : -1;
+            }
 
             public int Compare (IFoodAbstract x, IFoodAbstract y) {
-                // if (Sortparam == SortingEnum.Category) {
-                //     return CategoryComparer (x, y);
-                // } else if (Sortparam == SortingEnum.Price) {
-                //     return PriceComparer (x, y);
-                // } else if (Sortparam == SortingEnum.Title) {
-                //     return TitleComparer (x, y);
-                // } else {
-                //     throw new NotSupportedException ();
-                // }
-                return 1;
+                if (Sortparam == SortingEnum.Category) {
+                    return CategoryComparer (x, y);
+                } else if (Sortparam == SortingEnum.Price) {
+                    return PriceComparer (x, y);
+                } else if (Sortparam == SortingEnum.Title) {
+                    return TitleComparer (x, y);
+                } else {
+                    throw new NotSupportedException ();
+                }
             }
         }
 
@@ -71,12 +65,9 @@ namespace scraping_mvc.Controllers {
                 .Where (item => item.Description.ToLower ().Contains (obj.Description.ToLower ()))
                 .Where (item => item.Category.ToLower ().Contains (obj.Category.ToLower ()))
                 .Where (item => item.Title.ToLower ().Contains (obj.Title.ToLower ()))
-                // still sorts in memory
-                .OrderBy (item => obj.Sorting == SortingEnum.Title ? 
-                    extractNumber((string)item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null)) : 
-                    item.GetType().GetProperty(obj.Sorting.ToString()).GetValue(item, null))
-                .ThenBy(item => item.GetType().GetProperty("Title").GetValue(item, null));
-                
+                // sort on server
+                .AsEnumerable()
+                .OrderBy (item => item, new FoodPropsComparer<T> (obj.Sorting));
 
               return obj.SortIsDown ? newlist : newlist.Reverse ();
 

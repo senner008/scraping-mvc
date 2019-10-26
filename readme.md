@@ -11,6 +11,7 @@
 - Fix Culture Compare on server ( Å-A) - DONE
 - preload font-awesome icons - DONE
 - change post request to get with query object deconstucted to query params. DONE
+- Pre-sort lists, display array in fragments using while loop with reverse condition
 - create filterClass for js - with optimized combined filter actions
 - make js and linq comparers equal
 - Display Scraping process in UI
